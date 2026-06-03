@@ -1,0 +1,115 @@
+body{
+font-family:"Segoe UI", Arial;
+margin:0;
+background:#f4f6fb;
+}
+
+/* HEADER */
+
+.header{
+background:#2f3e7c;
+color:white;
+padding:18px 35px;
+font-size:22px;
+font-weight:600;
+}
+
+/* MAIN */
+
+.container{
+max-width:1200px;
+margin:30px auto;
+padding:20px;
+}
+
+/* DASHBOARD GRID */
+
+.dashboard{
+display:grid;
+grid-template-columns:320px 1fr;
+gap:25px;
+}
+
+/* LEFT PANEL */
+
+.left-panel{
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+/* RIGHT PANEL */
+
+.right-panel{
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+/* CARDS */
+
+.upload-box,
+.prediction-box,
+.result-card{
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* BUTTON */
+
+button{
+margin-top:15px;
+background:#2f3e7c;
+color:white;
+border:none;
+padding:10px 22px;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* PARAMETER GRID */
+
+.parameter-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+}
+
+/* PARAMETER CARD */
+
+.parameter-card{
+background:#f8f9fc;
+padding:16px;
+border-radius:8px;
+text-align:center;
+}
+
+.parameter-card h3{
+font-size:14px;
+color:#555;
+margin-bottom:5px;
+}
+
+.parameter-card p{
+font-size:20px;
+font-weight:bold;
+}
+
+/* REPORT TEXT */
+
+#reportText{
+white-space:pre-line;
+font-family:monospace;
+font-size:13px;
+background:#fafafa;
+padding:10px;
+border-radius:6px;
+max-height:200px;
+overflow-y:auto;
+}
+
+.parameter-card:hover{
+transform:scale(1.03);
+}

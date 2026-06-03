@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>AI Hepatitis Detection</title>
+<link rel="stylesheet" href="/static/style1.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+🧬 AI Hepatitis Detection Dashboard
+</div>
+
+<div class="container">
+
+<div class="dashboard">
+
+<!-- LEFT PANEL -->
+<div class="left-panel">
+
+<div class="upload-box">
+<h2>Upload Blood Report</h2>
+
+<input type="file" id="report">
+
+<button onclick="uploadReport()">Analyze Report</button>
+</div>
+
+<div class="prediction-box">
+<h2>Prediction Result</h2>
+
+<p id="prediction"></p>
+<p id="risk"></p>
+</div>
+
+</div>
+
+
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+
+<div class="result-card">
+
+<h2>Blood Parameters</h2>
+
+<div class="parameter-grid">
+
+<div class="parameter-card">
+<h3>Alanine Transaminase (ALT)</h3>
+<p id="altValue">--</p>
+</div>
+
+<div class="parameter-card">
+<h3>Aspartate Transaminase (AST)</h3>
+<p id="astValue">--</p>
+</div>
+
+<div class="parameter-card">
+<h3>Bilirubin</h3>
+<p id="bilirubinValue">--</p>
+</div>
+
+<div class="parameter-card">
+<h3>Albumin</h3>
+<p id="albuminValue">--</p>
+</div>
+
+<div class="parameter-card">
+<h3>Platelets</h3>
+<p id="plateletsValue">--</p>
+</div>
+
+<div class="parameter-card">
+<h3>Hemoglobin</h3>
+<p id="hemoglobinValue">--</p>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="result-card">
+
+<h2>AI Explanation</h2>
+<p id="aiExplanation"></p>
+
+</div>
+
+
+<div class="result-card">
+
+<h2>Extracted Report</h2>
+<p id="reportText"></p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="/static/script.js"></script>
+
+</body>
+</html>

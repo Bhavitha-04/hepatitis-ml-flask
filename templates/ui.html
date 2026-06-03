@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hepatitis-B Detection</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #f8f9ff, #eef1ff);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 30px;
+            background: #4b4e91;
+            color: white;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        header p {
+            margin-top: 5px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Grid (2x2 layout) */
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 50px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        /* Cards */
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 50px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: black;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        /* Icons */
+        .icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+        }
+
+        /* Soft Colors */
+        .symptom { color: #f7b267; }  /* soft orange */
+        .medical { color: #6c9bd2; }  /* soft blue */
+        .ai { color: #b084cc; }       /* lavender */
+        .manage { color: #7bc8a4; }   /* mint green */
+
+        /* Titles */
+        .title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            background: #4b4e91;
+            color: white;
+        }
+
+        /* Mobile */
+        @media (max-width: 500px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🧬 HEPATITIS-B DETECTION</h1>
+    <p>Prevention is better than panic</p>
+</header>
+
+<div class="container">
+
+    <!-- 1: Symptom Analysis -->
+    <a href="/test" class="card">
+        <div class="icon symptom">
+            <i class="fas fa-stethoscope"></i>
+        </div>
+        <div class="title">Symptom Analysis</div>
+    </a>
+
+    <!-- 2: Medical Analysis -->
+    <a href="/index1" class="card">
+        <div class="icon medical">
+            <i class="fas fa-microscope"></i>
+        </div>
+        <div class="title">Medical Analysis</div>
+    </a>
+
+    <!-- 3: AI Assistant -->
+    <a href="/ai" class="card">
+        <div class="icon ai">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="title">AI Assistant</div>
+    </a>
+
+    <!-- 4: Management Help -->
+    <a href="/management" class="card">
+        <div class="icon manage">
+            <i class="fas fa-notes-medical"></i>
+        </div>
+        <div class="title">Management Help</div>
+    </a>
+
+</div>
+
+<footer>
+    ⚠️ This tool is for awareness only.
+</footer>
+
+</body>
+</html>

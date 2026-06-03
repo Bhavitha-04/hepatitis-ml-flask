@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hepatitis B AI Assistant</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#eef1ff;
+}
+
+header{
+text-align:center;
+padding:20px;
+background:#4b4e91;
+color:white;
+}
+
+.chat-container{
+max-width:750px;
+margin:30px auto;
+background:white;
+border-radius:15px;
+display:flex;
+flex-direction:column;
+height:75vh;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+overflow:hidden;
+}
+
+.chat-box{
+flex:1;
+padding:20px;
+overflow-y:auto;
+}
+
+.row{
+display:flex;
+align-items:flex-start;
+margin:10px 0;
+}
+
+.row.user{
+justify-content:flex-end;
+}
+
+.avatar{
+width:32px;
+height:32px;
+border-radius:50%;
+background:#4b4e91;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:14px;
+margin-right:8px;
+}
+
+.row.user .avatar{
+background:#222;
+margin-left:8px;
+margin-right:0;
+}
+
+.message{
+padding:10px 14px;
+border-radius:12px;
+max-width:65%;
+background:#e4e7ff;
+}
+
+.row.user .message{
+background:#4b4e91;
+color:white;
+}
+
+.suggestions{
+padding:12px;
+text-align:center;
+border-top:1px solid #eee;
+}
+
+.suggestions button{
+margin:6px;
+padding:8px 14px;
+border:none;
+background:#eef1ff;
+color:#4b4e91;
+border-radius:20px;
+cursor:pointer;
+font-size:13px;
+font-weight:500;
+transition:0.2s;
+}
+
+.suggestions button:hover{
+background:#4b4e91;
+color:white;
+transform:scale(1.05);
+}
+
+.input-area{
+display:flex;
+align-items:center;
+padding:10px;
+border-top:1px solid #eee;
+background:#fafbff;
+}
+
+.input-area input{
+flex:1;
+padding:12px 15px;
+border:none;
+border-radius:25px;
+background:#f1f3ff;
+outline:none;
+font-size:14px;
+}
+
+.input-area button{
+border:none;
+background:#4b4e91;
+color:white;
+width:40px;
+height:40px;
+border-radius:50%;
+margin-left:8px;
+cursor:pointer;
+font-size:16px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.input-area button:hover{
+background:#383b7a;
+}
+
+button{
+padding:12px 16px;
+border:none;
+background:#4b4e91;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#383b7a;
+}
+
+.voice-btn{
+background:#6b6fd6;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>🤖 Hepatitis B AI Assistant</h2>
+<p>Ask about symptoms, prevention, diet, lifestyle and treatment</p>
+</header>
+
+<div class="chat-container">
+
+<div class="chat-box" id="chatBox">
+
+<div class="row bot">
+<div class="avatar">AI</div>
+<div class="message">
+Hello 👋 I'm your Hepatitis B assistant. Ask me anything about hepatitis B.
+</div>
+</div>
+
+</div>
+
+<div class="suggestions">
+<button onclick="quickAsk('What are hepatitis B symptoms?')">Symptoms</button>
+<button onclick="quickAsk('How does hepatitis B spread?')">Spread</button>
+<button onclick="quickAsk('What diet should hepatitis patients follow?')">Diet</button>
+<button onclick="quickAsk('Lifestyle tips for hepatitis')">Lifestyle</button>
+<button onclick="quickAsk('Is there a vaccine?')">Vaccine</button>
+</div>
+
+<div class="input-area">
+
+<input id="userInput" placeholder="Ask about Hepatitis B...">
+
+<button onclick="startVoice()">🎙️</button>
+
+<button onclick="sendMessage()">➤</button>
+
+</div>
+
+</div>
+
+<script>
+
+let input=document.getElementById("userInput");
+
+input.addEventListener("keypress",function(e){
+if(e.key==="Enter") sendMessage();
+});
+
+function quickAsk(text){
+input.value=text;
+sendMessage();
+}
+
+function sendMessage(){
+
+let text=input.value.trim();
+if(text==="") return;
+
+addMessage(text,"user");
+
+input.value="";
+
+typing();
+
+setTimeout(()=>{
+removeTyping();
+let reply=response(text);
+addMessage(reply,"bot");
+},700);
+
+}
+
+function addMessage(text,type){
+
+let chat=document.getElementById("chatBox");
+
+let row=document.createElement("div");
+row.classList.add("row",type);
+
+let avatar=document.createElement("div");
+avatar.classList.add("avatar");
+avatar.innerText= type==="user" ? "U" : "AI";
+
+let msg=document.createElement("div");
+msg.classList.add("message");
+msg.innerText=text;
+
+if(type==="user"){
+row.appendChild(msg);
+row.appendChild(avatar);
+}
+else{
+row.appendChild(avatar);
+row.appendChild(msg);
+}
+
+chat.appendChild(row);
+chat.scrollTop=chat.scrollHeight;
+
+}
+
+function typing(){
+
+let chat=document.getElementById("chatBox");
+
+let row=document.createElement("div");
+row.classList.add("row","bot");
+row.id="typing";
+
+let avatar=document.createElement("div");
+avatar.classList.add("avatar");
+avatar.innerText="AI";
+
+let msg=document.createElement("div");
+msg.classList.add("message");
+msg.innerText="Typing...";
+
+row.appendChild(avatar);
+row.appendChild(msg);
+
+chat.appendChild(row);
+
+}
+
+function removeTyping(){
+let t=document.getElementById("typing");
+if(t) t.remove();
+}
+const knowledgeBase = [
+
+{
+q:["what is hepatitis b","define hepatitis b","about hepatitis b"],
+a:"Hepatitis B is a viral infection that affects the liver and can cause both acute and chronic disease."
+},
+
+{
+q:["symptoms of hepatitis b","hepatitis symptoms"],
+a:"Common symptoms include fatigue, nausea, abdominal pain, dark urine, vomiting, and yellowing of the skin or eyes (jaundice)."
+},
+
+{
+q:["how does hepatitis b spread","transmission of hepatitis b"],
+a:"Hepatitis B spreads through infected blood, shared needles, and from mother to baby during birth."
+},
+
+{
+q:["is hepatitis b contagious"],
+a:"Yes, Hepatitis B is contagious and spreads through contact with infected body fluids such as blood."
+},
+
+{
+q:["how to prevent hepatitis b"],
+a:"Prevention includes vaccination, avoiding shared needles, safe sexual practices, and proper medical hygiene."
+},
+
+{
+q:["is there a vaccine"],
+a:"Yes, the Hepatitis B vaccine is very effective and usually given in three doses."
+},
+
+{
+q:["diet for hepatitis b","what should hepatitis patients eat"],
+a:"A healthy diet includes fruits, vegetables, whole grains, lean protein, and plenty of water."
+},
+
+{
+q:["foods to avoid"],
+a:"People with Hepatitis B should avoid alcohol, oily foods, excessive sugar, and highly processed foods."
+},
+
+{
+q:["exercise for hepatitis patients"],
+a:"Moderate exercise such as walking, yoga, and light workouts can improve overall health."
+},
+
+{
+q:["treatment for hepatitis b"],
+a:"Treatment depends on infection stage. Chronic Hepatitis B may require antiviral medications prescribed by a doctor."
+},
+
+{
+q:["can hepatitis b be cured"],
+a:"There is no complete cure for chronic Hepatitis B, but treatment can control the virus and prevent liver damage."
+},
+
+{
+q:["tests for hepatitis b"],
+a:"Common diagnostic tests include HBsAg, Anti-HBs, Anti-HBc, and HBV DNA blood tests."
+},
+
+{
+q:["is alcohol safe"],
+a:"Alcohol should be avoided because it can worsen liver damage."
+},
+
+{
+q:["how long does hepatitis last"],
+a:"Acute Hepatitis B usually lasts less than 6 months, while chronic infection may last many years."
+}
+
+];
+function response(text){
+
+text=text.toLowerCase();
+
+if(text.includes("symptom"))
+return "Common symptoms include fatigue, nausea, vomiting, abdominal pain, dark urine, and yellowing of skin or eyes (jaundice).";
+
+if(text.includes("spread"))
+return "Hepatitis B spreads through infected blood, shared needles, or from mother to baby during birth.";
+
+if(text.includes("diet"))
+return "Recommended diet: fruits, vegetables, whole grains, lean protein, and plenty of water.";
+
+if(text.includes("avoid"))
+return "Avoid alcohol, oily foods, and processed foods to protect liver health.";
+
+if(text.includes("exercise"))
+return "Moderate exercise like walking or yoga helps maintain overall health.";
+
+if(text.includes("lifestyle"))
+return "Healthy lifestyle includes avoiding alcohol, maintaining healthy weight, exercising regularly, and getting enough rest.";
+
+if(text.includes("vaccine"))
+return "Yes, Hepatitis B vaccine is very effective and usually given in 3 doses.";
+
+if(text.includes("treatment"))
+return "Treatment depends on infection stage. Chronic Hepatitis B may require antiviral medications prescribed by a doctor.";
+
+if(text.includes("test"))
+return "Blood tests such as HBsAg, Anti-HBs, Anti-HBc, and HBV DNA are used to diagnose Hepatitis B.";
+
+if(text.includes("cure"))
+return "There is no complete cure for chronic Hepatitis B, but treatment can control the virus and prevent liver damage.";
+
+return "You can ask about symptoms, spread, prevention, diet, lifestyle, vaccines, and treatment related to Hepatitis B.";
+
+}
+
+function startVoice(){
+
+let recognition=new(window.SpeechRecognition||window.webkitSpeechRecognition)();
+
+recognition.onresult=function(event){
+let text=event.results[0][0].transcript;
+input.value=text;
+sendMessage();
+}
+
+recognition.start();
+
+}
+
+</script>
+
+</body>
+</html>
+

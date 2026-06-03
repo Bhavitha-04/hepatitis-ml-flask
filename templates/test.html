@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Symptom Analysis</title>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* MAIN BOX */
+.container {
+    width: 650px;
+    max-width: 90%;
+    padding: 40px;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+/* PROGRESS */
+#progress {
+    font-size: 14px;
+    color: gray;
+    margin-bottom: 20px;
+}
+
+/* QUESTION */
+#question {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+/* OPTIONS */
+.option {
+    display: block;
+    margin: 12px 0;
+    padding: 14px;
+    border-radius: 12px;
+    background: #f2f6ff;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: left;
+}
+
+.option:hover {
+    background: #dce8ff;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* BUTTONS */
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+button {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1e40af;
+}
+
+/* RESULT */
+#resultBox {
+    display: none;
+}
+
+#riskText {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+#percent {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+/* COLORS */
+.low {
+    color: #16a34a;
+}
+
+.medium {
+    color: #f59e0b;
+}
+
+.high {
+    color: #dc2626;
+}
+
+#message {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- QUESTION SECTION -->
+    <div id="quizBox">
+        <h2>Hepatitis Risk Test</h2>
+        <div id="progress"></div>
+
+        <div id="question"></div>
+
+        <label class="option">
+            <input type="radio" name="answer" value="1"> Yes
+        </label>
+
+        <label class="option">
+            <input type="radio" name="answer" value="0"> No
+        </label>
+
+        <div class="btn-group">
+            <button onclick="prevQuestion()">Previous</button>
+            <button onclick="nextQuestion()">Next</button>
+        </div>
+    </div>
+
+    <!-- RESULT SECTION -->
+    <div id="resultBox">
+        <h2>Your Result</h2>
+
+        <div id="riskText"></div>
+        <div id="percent"></div>
+        <div id="message"></div>
+
+        <button onclick="restart()">Retake Test</button>
+    </div>
+
+</div>
+
+<script>
+
+const questions = [
+"Do you experience frequent fatigue?",
+"Have you lost appetite recently?",
+"Do you feel nausea often?",
+"Do you have unexplained fever?",
+"Do you have joint or muscle pain?",
+"Do you experience abdominal pain?",
+"Do you experience bloating?",
+"Have you lost weight unintentionally?",
+"Do you feel discomfort after meals?",
+"Yellowing of eyes or skin?",
+"Dark urine?",
+"Pale stools?",
+"Persistent itching?",
+"Symptoms lasting more than 1 week?",
+"Symptoms worsening?",
+"Symptoms recurring?"
+];
+
+let current = 0;
+let answers = new Array(questions.length).fill(null);
+
+function loadQuestion() {
+    document.getElementById("question").innerText = questions[current];
+    document.getElementById("progress").innerText =
+        `Question ${current + 1} of ${questions.length}`;
+
+    const options = document.getElementsByName("answer");
+
+    options.forEach(opt => {
+        opt.checked = (answers[current] == opt.value);
+    });
+}
+
+function nextQuestion() {
+    const selected = document.querySelector('input[name="answer"]:checked');
+
+    if (!selected) {
+        alert("Please select an answer!");
+        return;
+    }
+
+    answers[current] = selected.value;
+
+    if (current < questions.length - 1) {
+        current++;
+        loadQuestion();
+    } else {
+        calculateRisk();
+    }
+}
+
+function prevQuestion() {
+    if (current > 0) {
+        current--;
+        loadQuestion();
+    }
+}
+
+function calculateRisk() {
+    let totalYes = answers.filter(a => a == "1").length;
+    let percent = (totalYes / questions.length) * 100;
+
+    let risk;
+
+    if (percent >= 75) risk = "High Risk";
+    else if (percent >= 50) risk = "Medium Risk";
+    else if (percent >= 30) risk = "Low Risk";
+    else risk = "No Risk";
+
+    // hide quiz
+    document.getElementById("quizBox").style.display = "none";
+
+    // show result
+    document.getElementById("resultBox").style.display = "block";
+
+    const riskText = document.getElementById("riskText");
+    const percentText = document.getElementById("percent");
+    const message = document.getElementById("message");
+
+    riskText.innerText = risk;
+    percentText.innerText = percent.toFixed(1) + "% likelihood";
+
+    if (risk === "High Risk") {
+        riskText.classList.add("high");
+        message.innerText = "⚠️ Immediate medical consultation is recommended.";
+    }
+    else if (risk === "Medium Risk") {
+        riskText.classList.add("medium");
+        message.innerText = "⚠️ Monitor symptoms and consider a medical checkup.";
+    }
+    else if (risk === "Low Risk") {
+        riskText.classList.add("low");
+        message.innerText = "✔️ Low risk, but stay cautious.";
+    }
+    else {
+        riskText.classList.add("low");
+        message.innerText = "✔️ No significant symptoms detected.";
+    }
+}
+
+function restart() {
+    location.reload();
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>

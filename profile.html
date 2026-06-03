@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome <span id="userName"></span></h1>
+        <div id="profile-info"></div>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        let user = JSON.parse(localStorage.getItem("currentUser"));
+        if (!user) {
+            alert("No user logged in!");
+            window.location.href = "login.html";
+        } else {
+            document.getElementById("userName").innerText = user.name;
+            let info = `
+                <p>Phone: ${user.phone}</p>
+                <p>Age: ${user.age}</p>
+                <p>Gender: ${user.gender}</p>
+                <p>Thyroid: ${user.thyroid ? "Yes" : "No"}</p>
+                <p>PCOS: ${user.pcos ? "Yes" : "No"}</p>
+                <p>Pregnancy: ${user.pregnancy ? "Yes" : "No"}</p>
+            `;
+            document.getElementById("profile-info").innerHTML = info;
+        }
+
+        function logout() {
+            localStorage.removeItem("currentUser");
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>

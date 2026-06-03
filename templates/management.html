@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hepatitis B Management</title>
+
+<!-- Poppins Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+}
+
+/* HEADER */
+h1 {
+    text-align: center;
+    color: white;
+    padding: 20px;
+    font-weight: 600;
+}
+
+/* CONTAINER */
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
+}
+
+/* CARD STYLE */
+.section {
+    background: #ffffff;
+    padding: 25px;
+    margin: 25px 0;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transition: 0.3s;
+}
+
+.section:hover {
+    transform: translateY(-5px);
+}
+
+/* HEADINGS */
+h2 {
+    color: #1e3a8a;
+    font-weight: 600;
+}
+
+/* BUTTONS */
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: #2563eb;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #1e40af;
+}
+
+/* SELECT */
+select {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+/* OUTPUT */
+.output {
+    margin-top: 15px;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+/* COLORS */
+.low { color: #16a34a; }
+.medium { color: #f59e0b; }
+.high { color: #dc2626; }
+
+/* CHECKLIST */
+.checklist label {
+    display: block;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+.checklist input {
+    margin-right: 8px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Hepatitis B Management</h1>
+
+<div class="container">
+
+<!-- CARE -->
+<div class="section">
+<h2>🩺 Care & Treatment Guidance</h2>
+
+<select id="riskLevel">
+    <option value="">Select Risk Level</option>
+    <option value="low">Low Risk</option>
+    <option value="medium">Medium Risk</option>
+    <option value="high">High Risk</option>
+</select>
+
+<button onclick="showCare()">Get Guidance</button>
+
+<div id="careOutput" class="output"></div>
+</div>
+
+<!-- DIET -->
+<div class="section">
+<h2>🥗 Diet Plan</h2>
+
+<button onclick="showDiet()">Get Diet Plan</button>
+
+<div id="dietOutput" class="output"></div>
+</div>
+
+<!-- LIFESTYLE -->
+<div class="section">
+    <h2>🏃 Lifestyle Management</h2>
+    
+    <h3>Daily Health Checklist</h3>
+    
+    <div class="checklist" id="checklist">
+    <label><input type="checkbox"> Drank 2-3L Water</label>
+    <label><input type="checkbox"> Avoided oily/junk food</label>
+    <label><input type="checkbox"> Did light exercise (20-30 min)</label>
+    <label><input type="checkbox"> Slept 7-8 hours</label>
+    <label><input type="checkbox"> Avoided stress</label>
+    </div>
+    
+    <button onclick="checkLifestyle()">Check Progress</button>
+    
+    <div id="lifestyleOutput" class="output"></div>
+    
+    </div>
+    <!-- PREVENTION -->
+<div class="section">
+    <h2>🛡 Prevention & Awareness</h2>
+    
+    <button onclick="showPrevention()">View Awareness</button>
+    
+    <div id="preventionOutput" class="output"></div>
+    
+    </div>
+
+
+<!-- MEDICATION & REMINDERS -->
+<div class="section">
+    <h2>💊 Medication & Reminders</h2>
+    
+    <h3>Add Medication</h3>
+    
+    <input type="text" id="medName" placeholder="Medicine Name"><br><br>
+    <input type="text" id="dosage" placeholder="Dosage (e.g. 1 tablet)"><br><br>
+    
+    <select id="timing">
+        <option value="">Select Timing</option>
+        <option>Morning</option>
+        <option>Afternoon</option>
+        <option>Evening</option>
+        <option>Night</option>
+    </select><br><br>
+    
+    <select id="food">
+        <option value="">Before/After Food</option>
+        <option>Before Food</option>
+        <option>After Food</option>
+    </select><br><br>
+    
+    <button onclick="addMedicine()">Add Medicine</button>
+    
+    <div id="medList" class="output"></div>
+    
+    <hr>
+    
+    
+
+    </div>
+
+
+   
+    <script src="medication.js"></script>
+
+
+<script>
+
+// CARE
+function showCare() {
+    let risk = document.getElementById("riskLevel").value;
+    let output = document.getElementById("careOutput");
+
+    if (!risk) {
+        output.innerHTML = "Please select a risk level.";
+        return;
+    }
+
+    if (risk === "low") {
+        output.className = "output low";
+        output.innerHTML = `
+        <h2>🩺 Care & Treatment Guidance (Low Risk)</h2>
+
+<b>Status:</b> Your risk level is currently <span style="color:green;"><b>LOW</b></span>. No immediate medical concern is detected, but preventive care is important to maintain good health.<br><br>
+
+<b>✔ General Health Care</b><br>
+• Maintain good personal hygiene (regular hand washing, clean food practices)<br>
+• Avoid sharing personal items such as razors, toothbrushes, or needles<br>
+• Ensure all medical procedures use sterile equipment<br>
+• Stay up to date with recommended vaccinations (especially Hepatitis B vaccine)<br><br>
+
+<b>💊 Medication Guidance</b><br>
+• No specific antiviral treatment is required at this stage<br>
+• Avoid unnecessary use of painkillers or strong medicines without doctor advice<br>
+• Be cautious with over-the-counter drugs, especially those affecting the liver<br>
+• Do not self-medicate or take herbal supplements without medical consultation<br><br>
+
+<b>🧪 When to Test?</b><br>
+• Routine screening once a year<br>
+• If you experience symptoms like fatigue, fever, or yellowing of eyes/skin<br>
+• After any potential exposure (unsafe injections, blood contact)<br><br>
+
+<b>💡 Note:</b> Low risk does not mean zero risk. Continue healthy habits and regular monitoring.
+        `;
+    }
+
+    else if (risk === "medium") {
+        output.className = "output medium";
+        output.innerHTML = `
+        <h2>🩺 Care & Treatment Guidance (Medium Risk)</h2>
+
+<b>Status:</b> Your risk level is currently <span style="color:orange;"><b>MEDIUM</b></span>. This indicates a possible exposure or early signs. Medical attention and regular monitoring are recommended.<br><br>
+
+<b>⚠ General Health Care</b><br>
+• Maintain strict personal hygiene and avoid any unsafe practices<br>
+• Do not share personal items such as razors, toothbrushes, or needles<br>
+• Avoid alcohol and reduce intake of oily or processed foods<br>
+• Ensure a balanced diet to support liver health<br>
+• Inform healthcare providers before any medical procedures<br><br>
+
+<b>👨‍⚕ Medical Consultation</b><br>
+• Consult a doctor for further evaluation and guidance<br>
+• Follow medical advice strictly and do not ignore symptoms<br>
+• Discuss vaccination status with your doctor<br><br>
+
+<b>💊 Medication Guidance</b><br>
+• Medication may or may not be required based on test results<br>
+• Do not take any medication without medical supervision<br>
+• Avoid self-medication and herbal remedies<br>
+• Follow prescribed treatment plan if given<br><br>
+
+<b>🧪 When to Test?</b><br>
+• Get tested immediately if not already done (HBsAg, Liver Function Tests)<br>
+• Follow-up tests every 3–6 months as advised by doctor<br>
+• Test immediately if symptoms like fatigue, nausea, or jaundice appear<br><br>
+
+<b>💡 Important Note:</b> Medium risk is a warning stage. Early action can prevent complications and progression to severe condition.
+        `;
+    }
+
+    else {
+        output.className = "output high";
+        output.innerHTML = `
+        <h2>🩺 Care & Treatment Guidance (High Risk)</h2>
+
+<b>Status:</b> Your risk level is <span style="color:red;"><b>HIGH</b></span>. This indicates a strong possibility of active infection. Immediate medical care and continuous monitoring are essential.<br><br>
+
+<b>🚨 Medical Supervision</b><br>
+• Stay under regular supervision of a qualified doctor or specialist<br>
+• Follow all prescribed treatments without skipping doses<br>
+• Do not stop medication without medical advice<br>
+• Attend all scheduled check-ups and follow-ups<br><br>
+
+<b>💊 Medication Guidance</b><br>
+• Take antiviral medications exactly as prescribed<br>
+• Follow proper timing (morning / evening) and dosage<br>
+• Continue full course of treatment even if symptoms improve<br>
+• Do not self-medicate or change medicines on your own<br>
+• Inform doctor about any side effects immediately<br><br>
+
+<b>🧪 Regular Monitoring</b><br>
+• Perform regular tests such as HBsAg, HBV DNA, and Liver Function Tests<br>
+• Monitor liver health periodically as advised by doctor<br>
+• Keep track of reports and medical history<br><br>
+
+<b>🛡 Prevent Transmission</b><br>
+• Do not share personal items (razors, toothbrushes, needles)<br>
+• Inform close contacts so they can get tested or vaccinated<br>
+• Practice safe hygiene and precautions<br><br>
+
+<b>🚑 When to Seek Immediate Help?</b><br>
+• Severe fatigue or weakness<br>
+• Yellowing of eyes/skin (jaundice)<br>
+• Persistent vomiting or abdominal pain<br>
+• Swelling in abdomen or legs<br><br>
+
+<b>💡 Important Note:</b> High risk condition requires strict medical care. Early treatment and consistent monitoring can help manage the disease and prevent serious complications.
+        `;
+    }
+}
+
+
+// DIET
+function showDiet() {
+    let risk = document.getElementById("riskLevel").value;
+    let output = document.getElementById("dietOutput");
+
+    if (!risk) {
+        output.innerHTML = "Select risk level first";
+        return;
+    }
+
+    if (risk === "low") {
+        output.innerHTML = `
+        <b>Diet Plan for Low Risk</b><br><br>
+
+<b>✔ What to Eat</b><br>
+• Fresh fruits (apple, banana, papaya)<br>
+• Green leafy vegetables (spinach, broccoli)<br>
+• Whole grains (brown rice, oats, roti)<br>
+• Protein sources (dal, eggs, sprouts)<br>
+• Drink 2–3 liters of water daily<br><br>
+
+<b>❌ What to Avoid</b><br>
+• Junk and fast food<br>
+• Oily and fried foods<br>
+• Unhygienic street food<br>
+• Sugary drinks and excess sugar<br><br>
+
+<b>💡 Healthy Tips</b><br>
+• Wash fruits and vegetables properly<br>
+• Eat freshly cooked home food<br>
+• Maintain balanced diet<br>
+• Avoid overeating<br><br>
+
+<b>🎯 Goal</b><br>
+• Maintain strong immunity<br>
+• Keep liver healthy<br>
+        `;
+    }
+
+    else if (risk === "medium") {
+        output.innerHTML = `
+        <b>Diet Plan for Medium Risk</b><br><br>
+
+<b>✔ What to Eat</b><br>
+• Easily digestible foods (khichdi, boiled rice)<br>
+• Fresh fruits (apple, papaya, berries)<br>
+• High-fiber foods (oats, whole grains)<br>
+• Lean protein (dal, paneer, boiled egg)<br>
+• Coconut water and fresh juices (no sugar)<br><br>
+
+<b>❌ What to Avoid</b><br>
+• Oily and spicy food<br>
+• Processed and packaged food<br>
+• Excess sugar and sweets<br>
+• Outside food<br><br>
+
+<b>💡 Important Tips</b><br>
+• Eat small frequent meals<br>
+• Stay hydrated throughout the day<br>
+• Avoid heavy meals<br>
+• Maintain proper meal timings<br><br>
+
+<b>🎯 Goal</b><br>
+• Reduce stress on liver<br>
+• Improve digestion and immunity<br>
+        `;
+    }
+
+    else {
+        output.innerHTML = `
+        <b>Diet Plan for High Risk / Patient</b><br><br>
+
+<b>✔ Recommended Foods</b><br>
+• Light and soft foods (khichdi, boiled vegetables)<br>
+• Fresh fruits (banana, papaya, apple)<br>
+• High-protein but light food (dal, tofu, egg white)<br>
+• Plenty of fluids (water, coconut water, soups)<br>
+• Low-fat dairy (curd, milk in moderation)<br><br>
+
+<b>❌ Strictly Avoid</b><br>
+• Alcohol (very dangerous for liver)<br>
+• Fried and oily food<br>
+• Red meat<br>
+• Processed and packaged food<br>
+• High salt and sugary foods<br><br>
+
+<b>💡 Special Tips</b><br>
+• Eat 5–6 small meals a day<br>
+• Avoid heavy meals at night<br>
+• Maintain hygiene in food preparation<br>
+• Follow doctor-recommended diet strictly<br><br>
+
+<b>⚠ If Symptoms Increase</b><br>
+• Loss of appetite<br>
+• Nausea or vomiting<br>
+• Weakness<br><br>
+
+👉 Switch to light or liquid diet (soups, juices)<br><br>
+
+<b>🎯 Goal</b><br>
+• Reduce liver damage<br>
+• Support recovery and energy levels<br>
+        `;
+    }
+}
+
+
+
+// LIFESTYLE CHECK
+function checkLifestyle() {
+    let checkboxes = document.querySelectorAll("#checklist input[type='checkbox']");
+    let checkedCount = 0;
+
+    checkboxes.forEach(cb => {
+        if (cb.checked) checkedCount++;
+    });
+
+    let output = document.getElementById("lifestyleOutput");
+
+    if (checkedCount === 5) {
+        output.innerHTML = "<span style='color:green; font-weight:bold;'>Excellent! You are maintaining a healthy lifestyle. Keep going 💪</span>";
+    }
+    else if (checkedCount >= 3) {
+        output.innerHTML = "<span style='color:orange; font-weight:bold;'>Good effort! You're on the right track. Try to complete all your goals 👍</span>";
+    }
+    else if (checkedCount > 0) {
+        output.innerHTML = "<span style='color:red; font-weight:bold;'>You need to improve your lifestyle habits. Start with small steps 🚶‍♀️</span>";
+    }
+    else {
+        output.innerHTML = "Please select at least one activity.";
+    }
+}
+
+
+
+function showPrevention() {
+    let output = document.getElementById("preventionOutput");
+
+    output.innerHTML = `
+    
+
+    <b>💡 Why Prevention is Important?</b><br>
+    Even if your risk is low, prevention helps stop the spread of infection and protects others.<br><br>
+
+    <b>🦠 How Hepatitis B Spreads</b><br>
+    • Contact with infected blood<br>
+    • Sharing needles or sharp objects<br>
+    • Unsafe medical procedures<br>
+    • From mother to baby at birth<br><br>
+
+    <b>🚫 What DOES NOT Spread It</b><br>
+    • Hugging or handshakes<br>
+    • Sharing food or water<br>
+    • Coughing or sneezing<br>
+    • Casual contact<br><br>
+
+    <b>✔ Safety Precautions</b><br>
+    • Do not share personal items (razors, toothbrushes)<br>
+    • Use only sterile needles and medical equipment<br>
+    • Ensure blood transfusions are screened<br>
+    • Practice safe hygiene habits<br><br>
+
+    <b>💉 Vaccination (Best Protection)</b><br>
+    • Hepatitis B vaccine is safe and effective<br>
+    • Usually given in 3 doses<br>
+    • Family members should get vaccinated<br><br>
+
+    <b>⚠ Important Awareness</b><br>
+    • Disease is manageable if detected early<br>
+    • Regular testing helps early detection<br>
+    • Do not panic, follow proper medical advice<br><br>
+
+    <b>❌ Common Myths</b><br>
+    • Myth: It spreads by touch → Fact: It does NOT<br>
+    • Myth: Only sick people have it → Fact: Many have no symptoms<br><br>
+
+    <b>🎯 Goal</b><br>
+    • Prevent infection<br>
+    • Protect family members<br>
+    • Spread awareness in society<br>
+    `;
+}
+
+</script>
+
+</body>
+</html>

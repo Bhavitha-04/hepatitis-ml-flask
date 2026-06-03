@@ -75,3 +75,10 @@ hepatitis-ml-flask/
 ├── index.html
 │
 └── README.md
+
+## ⚙️ How to Run
+pip install -r requirements.txt
+python app.py
+
+## 📊 Model
+- Trained ML model saved as hepatitis_model.pkl
